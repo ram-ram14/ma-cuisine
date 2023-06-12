@@ -27,7 +27,7 @@ function Category() {
 }
 
 const List = styled.div`
-    dislay: flex;
+    display: flex;
     justify-content: center;
     margin: 2rem 0rem;
 `;

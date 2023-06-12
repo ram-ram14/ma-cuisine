@@ -56,14 +56,14 @@ function Popular() {
 }
 
 const Wrapper = styled.div`
-margin: 4rem 0rem;
+  margin: 4rem 0rem;
 `;
 
   const Card = styled.div`
-  min-height: 25rem;
-  border-radius: 2rem;
-  overflow: hidden;
-  position: relative;
+    min-height: 25rem;
+    border-radius: 2rem;
+    overflow: hidden;
+    position: relative;
 
   img {
     border-radius: 2rem;
