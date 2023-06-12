@@ -74,6 +74,7 @@ const Card = styled.div`
     height: 100%;
     object-fit: cover;
   }
+
   p {
     position: absolute;
     z-index: 10;
@@ -99,4 +100,5 @@ const Gradient = styled.div`
   height: 100%;
   background: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.5));
 `;
+
 export default Veggie;
