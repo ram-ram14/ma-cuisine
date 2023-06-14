@@ -1,66 +1,78 @@
 import React from 'react'
 import { useEffect, useState } from "react";
 import styled from 'styled-components';
-import {Splide, SplideSlide} from '@splidejs/react-splide';
+import { Splide, SplideSlide } from '@splidejs/react-splide';
 import '@splidejs/splide/dist/css/splide.min.css';
 import { Link } from 'react-router-dom';
 
 function Veggie() {
 
+  // Define the state variable "veggie" and its updater function "setVeggie"
   const [veggie, setVeggie] = useState([]);
 
   useEffect(() => {
+    // Call the function "getVeggie" when the component mounts
     getVeggie();
-  },[]);
-  
+  }, []);
+
+  // Function to fetch vegetarian recipes
   const getVeggie = async () => {
 
+    // Check if there are already saved recipes in local storage
     const check = localStorage.getItem('veggie');
 
-    if(check) {
+    if (check) {
+      // If there are saved recipes, update the "veggie" state with them
       setVeggie(JSON.parse(check));
     } else {
+      // If there are no saved recipes, fetch recipes from the Spoonacular API
       const api = await fetch(`https://api.spoonacular.com/recipes/random?apiKey=${process.env.REACT_APP_API_KEY}&number=9&tags=vegetarian`);
       const data = await api.json();
 
+      // Save the fetched recipes in local storage
       localStorage.setItem('veggie', JSON.stringify(data.recipes));
+      // Update the "veggie" state with the fetched recipes
       setVeggie(data.recipes);
     }
   }
 
   return (
     <div>
-          <Wrapper>
-            <h3>Our Vegetarian Picks</h3>
+      <Wrapper>
+        <h3>Our Vegetarian Picks</h3>
 
-            <Splide options={{
-              perPage: 3, 
-              arrows: false,
-              pagination: false,
-              drag: 'free',
-              gap: '5rem',
-            }}>
-              {veggie.map((recipe) => {
-                return (
-                  <SplideSlide key={recipe.id}>
-                  <Card>
-                    <Link to={'/recipe/' + recipe.id }>
-                      <p>{recipe.title}</p>
-                      <img src={recipe.image} alt={recipe.title} />
-                      <Gradient />
-                    </Link>
-                  </Card>
-                  </SplideSlide>
-                );
-              })}
-            </Splide>
-          </Wrapper>
+        {/* Render a carousel using the "Splide" component */}
+        <Splide options={{
+          perPage: 3,
+          arrows: false,
+          pagination: false,
+          drag: 'free',
+          gap: '5rem',
+        }}>
+          {/* Map over the "veggie" state array and render each recipe as a slide */}
+          {veggie.map((recipe) => {
+            return (
+              <SplideSlide key={recipe.id}>
+                <Card>
+                  {/* Link to the recipe details page */}
+                  <Link to={'/recipe/' + recipe.id}>
+                    <p>{recipe.title}</p>
+                    <img src={recipe.image} alt={recipe.title} />
+                    <Gradient />
+                  </Link>
+                </Card>
+              </SplideSlide>
+            );
+          })}
+        </Splide>
+      </Wrapper>
     </div>
   )
 }
 
+// Styling for the component
 const Wrapper = styled.div`
-margin: 4rem 0rem;
+  margin: 4rem 0rem;
 `;
 
 const Card = styled.div`
@@ -82,7 +94,7 @@ const Card = styled.div`
     position: absolute;
     z-index: 10;
     left: 50%;
-    botton: 0%;
+    bottom: 0%;
     transform: translate(-50%, 0%);
     color: white;
     width: 100%;
